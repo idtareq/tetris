@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Tetris</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Montserrat', sans-serif;
+		}
+		.board {
+			width: 300px;
+			height: 450px; /* 480-30(hidden) */
+			/* outline: 1px solid blue; */
+			display: inline-flex;
+			flex-wrap: wrap;
+			align-content: flex-start;
+			outline: 2px solid rgba(200, 200, 200, 0.5);
+		}
+		.piece {
+			width: 30px;
+			height: 30px;
+			outline: 1px solid rgba(200, 0, 0, 0.05);
+		}
+		.piece-filled {
+			background-color: lightseagreen;
+		}
+		.score {
+			display: inline-flex;
+			flex-direction: column;
+			margin-left: 1em;
+			align-items: center;
+			text-transform: uppercase;
+			text-align: center;
+			position: relative;
+			top: 100px;
+			color: darkred;
+		}
+		.score * {
+			margin-bottom: 1em;
+		}
+		.btn {
+			font-family: inherit;
+			box-shadow: 0px 1px 0px 0px #f0f7fa;
+			background-color:#33bdef;
+			border:1px solid #33bdef;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			padding:0.5em 1em;
+			transition: opacity ease-in-out 200ms;
+		}
+		.hidden {
+			opacity: 0.2;
+		}
+		.piece:nth-child(1), .piece:nth-child(2), .piece:nth-child(3), .piece:nth-child(4), .piece:nth-child(5),
+		.piece:nth-child(6), .piece:nth-child(7), .piece:nth-child(8), .piece:nth-child(9), .piece:nth-child(10) {
+			display: none;
+		}
+		/* * {
+			outline: 1px solid red;
+		} */
+	</style>
+	<script src="game.js" defer></script>
+</head>
+<body>
+	<div class="board"></div>
+	<div class="score">Youre Score <br><span>0</span><input class="btn btn-newgame hidden" type="button" value="New Game"></div>
+	<div><small style="color: lightgray;">Keys: left, right, up, down, space</space></small></div>
+</body>
+</html>
+<!-- 
+	Hide top rows
+	Collison problems
+	Freeze delay
+ -->
