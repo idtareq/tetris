@@ -1,6 +1,7 @@
 // Todo: https://tetris.wiki/TGM_Rotation
 // Wall kicks, Show next piece, Hold, Grace period
 // Support mobile
+// Show loading
 
 const log = console.log;
 
