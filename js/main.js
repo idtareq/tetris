@@ -1,7 +1,9 @@
 // Todo: https://tetris.wiki/TGM_Rotation
-// Wall kicks, Show next piece, Hold, Grace period
+// Wall kicks, Show next piece, Hold, Grace period, particles, more effects
 // Support mobile
 // Show loading
+// controls can get stuck if they dont get handled? 
+// control panel, networking, chat, online users, ai, machine learning, leaderboard, SpecialLineClearSingle, switch game
 
 const log = console.log;
 
@@ -18,6 +20,21 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 document.getElementById("game").appendChild(app.view);
 
 import {tettex, tetromino} from './tetromino.js';
+
+const loader = PIXI.loader;
+
+loader.onProgress.add(() => {
+    document.querySelector('#loading_percentage').innerText = Math.round(loader.progress) + "%";
+});
+
+loader.load((loader, resources) => {
+    document.querySelector('#loader').style.display = "none";
+    document.querySelector('#panel').style.display = "block";
+    document.querySelector('#game').style.display = "block";
+    start(resources);
+});
+
+function start(resources) {
 
 const fieldW = 12;
 const fieldH = 18;
@@ -56,7 +73,7 @@ for (let x = 0; x<fieldW; x++) for (let y = 0; y<fieldH; y++)
     app.stage.addChild(fieldSprites[i]);
 }
 
-PIXI.sound.play('GameStart');
+resources['GameStart'].sound.play();
 
 app.ticker.add(function(dt){
     // game timing
@@ -69,37 +86,37 @@ app.ticker.add(function(dt){
         if(keys.left) {
             if (doesPieceFit(state.currentPiece, state.currentRotation, state.currentX - 1, state.currentY)){
                 state.currentX -= 1;
-                PIXI.sound.play('PieceMoveLR');
+                resources['PieceMoveLR'].sound.play();
             }
         }
         if(keys.right) {
             if (doesPieceFit(state.currentPiece, state.currentRotation, state.currentX + 1, state.currentY)){
                 state.currentX += 1;
-                PIXI.sound.play('PieceMoveLR');
+                resources['PieceMoveLR'].sound.play();
             }
         }
         if(keys.down) {
             if (doesPieceFit(state.currentPiece, state.currentRotation, state.currentX, state.currentY + 1)){
                 state.currentY += 1;
-                PIXI.sound.play('PieceSoftDrop');
+                resources['PieceSoftDrop'].sound.play();
             }
         }
         if(keys.z) {
             if (doesPieceFit(state.currentPiece, state.currentRotation + 1, state.currentX, state.currentY)){
                 state.currentRotation += 1;
                 keys.z = false;
-                PIXI.sound.play('PieceRotateLR');
+                resources['PieceRotateLR'].sound.play();
             }else{
-                PIXI.sound.play('PieceRotateFail');
+                resources['PieceRotateFail'].sound.play();
             }
         }
         if(keys.x) {
             if (doesPieceFit(state.currentPiece, state.currentRotation - 1, state.currentX, state.currentY)){
                 state.currentRotation -= 1;
                 keys.x = false;
-                PIXI.sound.play('PieceRotateLR');
+                resources['PieceRotateLR'].sound.play();
             }else{
-                PIXI.sound.play('PieceRotateFail');
+                resources['PieceRotateFail'].sound.play();
             }
         }
         //game logic
@@ -150,14 +167,14 @@ app.ticker.add(function(dt){
                     }
                 }
 
-                PIXI.sound.play('PieceTouchDown');
+                resources['PieceTouchDown'].sound.play();
 
                 pieceCount++;
                 if(pieceCount % 10 === 0) {
                     if (gameSpeed>10) { 
                         gameSpeed--;
                         state.level++;
-                        PIXI.sound.play('LevelUp');
+                        resources['LevelUp'].sound.play();
                     }
                 }
 
@@ -186,8 +203,8 @@ app.ticker.add(function(dt){
                 state.score+=25;
                 if(lines.length) {
                     state.score+= (1 << lines.length) * 100;
-                    if (lines.length===1) PIXI.sound.play('SpecialLineClearSingle');
-                    else PIXI.sound.play('SpecialLineClearDouble');
+                    if (lines.length===1) resources['SpecialLineClearSingle'].sound.play();
+                    else resources['SpecialLineClearDouble'].sound.play();
                 }
 
                 // chose next piece 
@@ -198,7 +215,7 @@ app.ticker.add(function(dt){
 
                 // if piece doesnt fit 
                 gameOver = !doesPieceFit(state.currentPiece, state.currentRotation, state.currentX, state.currentY);
-                if(gameOver) PIXI.sound.play('GameOver');
+                if(gameOver) resources['GameOver'].sound.play();
             }
         }
 
@@ -305,7 +322,7 @@ function restartGame() {
             field[i] = 9;
         }
     }
-    PIXI.sound.play('GameStart');
+    resources['GameStart'].sound.play();
 }
 
 function mod(n, m) {
@@ -336,3 +353,5 @@ window.addEventListener('keyup', function (e) {
     if (e.keyCode === 88) keys.x=false;
     if (e.keyCode === 82) restartGame();
 });
+
+}
