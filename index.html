@@ -24,6 +24,7 @@
 		font-family: 'press_start_2pregular';
 		background-color: black;
 		overflow: hidden;
+		line-height: 1.7em;
 	}
 	#container {
 		display: flex;
@@ -32,7 +33,7 @@
 		height: 100vh;
 	}
 	#instruction {
-		font-size: 0.6em;
+		font-size: 0.7em;
 		bottom: 1em;
 		position: absolute;
 	}
@@ -45,7 +46,7 @@
 	#panel {
 		margin-left: 1em;
 		color: white;
-		font-size: 1.7em;
+		font-size: 1.2em;
 		position: relative;
 		display: none;
 		/* width: 250px; */
@@ -61,7 +62,7 @@
 		/* display: none; */
 		visibility: hidden;
 	}
-	#game, canvas {
+	#game, #game>canvas {
 		width:auto;
 		max-height: 95vh;
 		max-width: 67vw;
@@ -69,13 +70,21 @@
 	#next {
 		margin-top: 0.5em;
 	}
-
+	#next>canvas {
+	}
+	#score {
+		position: absolute;
+		margin-left: 1em;
+	}
 	@media screen and (orientation:portrait) {
 		html {
 			font-size: 1.8vw;
 		}
 		#panel {
-			height: calc(67vw * 1.5)
+			height: calc(67vw * 1.5);
+		}
+		#next>canvas {
+			width: 100%;
 		}
 	}
 
@@ -93,13 +102,15 @@
 			<div>Level <span id="level"></span></div>
 			<br>
 			<br>
-			<div id="gameover">Game Over</div>
+			<div id="gameover">Game Over<br><br>Press S <br>to start</div>
 			<br>
 			<br>
+			<div id="nextContainer">
 			<div>Next</div>
 			<div id="next"></div>
+			</div>
 			<br>
-			<div id="instruction"><div style="text-decoration: underline;">controls</div><br><span style="color:yellow;">z, x:</span> rotate piece<br> <span style="color:yellow;">r:</span> restart game</div>
+			<div id="instruction"><div>controls</div>z x Rotate</div>
 		</div>
 	</div>
 	<script>

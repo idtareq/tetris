@@ -272,8 +272,10 @@ app.ticker.add(function(dt){
             _lastgameOver = gameOver;
             if(gameOver) {
                 document.getElementById("gameover").style.visibility = 'visible';
+                document.getElementById("nextContainer").style.visibility = 'hidden';
             }else{
                 document.getElementById("gameover").style.visibility = 'hidden';
+                document.getElementById("nextContainer").style.visibility = 'visible';
             }
         }
 
@@ -392,7 +394,7 @@ window.addEventListener('keyup', function (e) {
     if (e.keyCode === 40) keys.down=false;
     if (e.keyCode === 90) keys.z=false;
     if (e.keyCode === 88) keys.x=false;
-    if (e.keyCode === 82) restartGame();
+    if (e.keyCode === 83) restartGame();
 });
 
 }
